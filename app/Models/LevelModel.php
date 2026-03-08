@@ -4,20 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LevelModel extends Model
 {
     use HasFactory;
 
-    // Menentukan nama tabel (jika tidak mengikuti standar Laravel yang jamak/plural)
-    protected $table = 'm_level'; 
+    protected $table      = 'm_level';
+    protected $primaryKey = 'level_id';
 
-    // Menentukan primary key tabel m_level
-    protected $primaryKey = 'level_id'; 
+    protected $fillable = [
+        'level_kode',
+        'level_nama',
+    ];
 
-    // Relasi ke UserModel: satu level memiliki banyak user
-    public function users(): HasMany
+    // Relasi One to Many ke UserModel
+    public function user()
     {
         return $this->hasMany(UserModel::class, 'level_id', 'level_id');
     }
